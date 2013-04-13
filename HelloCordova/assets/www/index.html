@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=5, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+        <title>Hello World</title>
+    </head>
+    <body>
+        <script type="text/javascript" src="cordova-2.5.0.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" charset="utf-8" src="wordDb.js"></script>	
+		<script type="text/javascript" charset="utf-8" src="utils.js"></script>	
+
+		<center><font size="+3"><div id="question"></div></font></center>
+		<center><font size="+3"><div id="answer"></div></font></center>
+		<center><font size="+3"><div id="status"></div></font></center> 
+		<center><font size="+3"><div id="score"></div></font></center>	
+		<center><font size="+3"><div id="select_page"></div></center>	
+		<center><font size="+3"><div id="review_list"></div></center>
+			
+		<script type="text/javascript">
+					 
+		var subPath = "mp3/";
+	
+		function selectPage_lc(form)
+		{
+			clearLocalStorage(form.page.value+"review");
+			
+	//		alert("page=" + form.page.value);
+			main_lc(myQues[form.page.value], form.page.value);
+		}	
+		if (!localStorage.score) {
+			localStorage.score = 0;
+		}
+		
+		// show select page component and start button
+		var html_review = ['<br>'];
+		var html = [''];
+		html.push('<br><br><form action=""><select name="page">');
+		for (i in myQues)
+		{
+//			alert("i=" + i);
+			html.push('<option value="' + i + '">' + i + '</option>');
+			
+			if (localStorage[i+"review"]) {
+				html_review.push("["+i+"] ");
+			}
+		}
+		html.push('</select>');
+		html.push('<p><p><input type="button" name="start" value="start" onClick="selectPage_lc(this.form)">');
+		html.push('</form>');
+		html.push('Your score: ' + localStorage.score);
+		document.getElementById("select_page").innerHTML = html.join('');
+		document.getElementById("review_list").innerHTML = html_review.join('');	
+		</script>					
+    </body>
+</html>
